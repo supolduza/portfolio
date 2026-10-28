@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://supolduza.github.io/portfolio/sitemap.xml

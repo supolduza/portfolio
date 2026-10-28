@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>My Money</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6d28d9">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="My Money">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+<style>
+/* ===== COLOURS (edit me) ===== */
+:root{--bg:#f4f1fb;--card:#fff;--text:#1f1b2e;--muted:#5e5873;--line:#e7e2f3;--exp:#c2264b;--inc:#0b8a55;--ok:#16a34a;--warn:#f59e0b;--bad:#dc2626;--g1:#7c3aed;--g2:#ec4899;--g3:#f59e0b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14111f;--card:#1f1b30;--text:#f1eefb;--muted:#b3acc9;--line:#322c4a;--exp:#ff7a96;--inc:#4ade9a;--g1:#5b21b6;--g2:#be185d;--g3:#b45309;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14111f;--card:#1f1b30;--text:#f1eefb;--muted:#b3acc9;--line:#322c4a;--exp:#ff7a96;--inc:#4ade9a;--g1:#5b21b6;--g2:#be185d;--g3:#b45309;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden;padding-bottom:110px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--g1);z-index:5}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;min-height:44px}
+.wrap{max-width:640px;margin:0 auto;padding:0 14px}
+header{background:linear-gradient(135deg,var(--g1),var(--g2) 60%,var(--g3));color:#fff;padding:14px 0 54px;border-radius:0 0 28px 28px}
+.top{display:flex;justify-content:space-between;align-items:center}
+h1{font-size:1.25rem;margin:0}h2{font-size:1.05rem;margin:0 0 10px}
+.ib{background:rgba(255,255,255,.22);border:0;border-radius:50%;width:44px;color:#fff;font-size:1.2rem}
+.months{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0}
+.months span{font-weight:700;min-width:150px;text-align:center}
+.bal{text-align:center}.bal small{opacity:.95}.bal b{display:block;font-size:2.2rem;line-height:1.2}
+.row3{display:flex;gap:10px;margin-top:12px}
+.pill{flex:1;background:rgba(0,0,0,.22);border-radius:16px;padding:8px 10px;text-align:center;font-size:.85rem}.pill b{display:block;font-size:1.05rem}
+.card{background:var(--card);border-radius:20px;padding:16px;margin-top:14px;box-shadow:0 6px 20px rgba(60,30,120,.10)}
+.pull{margin-top:-34px}
+.bar{height:16px;background:var(--line);border-radius:99px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--ok);transition:width .5s,background .3s}
+.stats{display:flex;justify-content:space-between;gap:6px;text-align:center;font-size:.85rem;color:var(--muted)}.stats b{display:block;color:var(--text);font-size:1rem}
+.banner{border-radius:14px;padding:10px 12px;margin-top:10px;font-weight:600}
+.banner.warn{background:#fef3c7;color:#6b4300}.banner.bad{background:#fee2e2;color:#8a1111}
+.note{font-size:.8rem;background:#fef3c7;color:#6b4300;border-radius:10px;padding:6px 10px;margin-top:10px}
+.welcome{text-align:center;padding:26px 16px}.welcome .big{font-size:3rem}
+.seg{display:flex;background:var(--line);border-radius:99px;padding:3px}.seg button{flex:1;border:0;background:none;border-radius:99px}.seg button.on{background:var(--card);font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.legend{list-style:none;padding:0;margin:10px 0 0}.legend li{display:flex;align-items:center;gap:8px;padding:4px 0}.legend .sw{width:12px;height:12px;border-radius:4px;flex:none}.legend .n{flex:1}
+canvas{width:100%;display:block}
+.empty{color:var(--muted);text-align:center;padding:18px 0}
+.date{font-size:.8rem;font-weight:700;color:var(--muted);margin:14px 0 4px;text-transform:uppercase}
+.entry{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:6px 0}
+.entry .main{flex:1;display:flex;align-items:center;gap:10px;background:none;border:0;text-align:left;min-width:0;padding:0}
+.emo{font-size:1.5rem;width:40px;height:40px;display:grid;place-items:center;background:var(--bg);border-radius:12px;flex:none}
+.txt{min-width:0}.txt b,.txt small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.txt small{color:var(--muted)}
+.amt{font-weight:700;white-space:nowrap}.amt.e{color:var(--exp)}.amt.i{color:var(--inc)}
+.del{background:none;border:0;width:40px;font-size:1.1rem}
+.fab{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:68px;height:68px;border-radius:50%;border:0;color:#fff;font-size:2.4rem;background:linear-gradient(135deg,var(--g1),var(--g2));box-shadow:0 8px 24px rgba(124,58,237,.5);z-index:10}
+.ov{position:fixed;inset:0;background:rgba(10,5,25,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--card);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:24px 24px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.sheet label{display:block;font-weight:600;margin:12px 0 4px}
+.sheet input:not([type=checkbox]),.sheet select{width:100%;min-height:48px;border:2px solid var(--line);border-radius:14px;background:var(--bg);padding:6px 12px}
+.sheet input:focus,.sheet select:focus,button:focus-visible{outline:3px solid var(--g1);outline-offset:2px}
+#amount{font-size:2rem;font-weight:700;text-align:center}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:2px solid var(--line);background:var(--bg);border-radius:99px;padding:6px 12px;min-height:44px}.chip.on{border-color:var(--g1);background:var(--g1);color:#fff;font-weight:700}
+.btn{width:100%;min-height:54px;border:0;border-radius:16px;font-weight:700;font-size:1.1rem;margin-top:14px;background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff}
+.btn.sec{background:var(--line);color:var(--text)}.btn.dng{background:var(--bad);color:#fff}
+.two{display:flex;gap:8px}.two input:first-child{width:80px;text-align:center}
+textarea{width:100%;height:80px;margin-top:8px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text)}
+.goal{display:flex;gap:14px;align-items:center}.goal svg{width:110px;flex:none}.goal .info{flex:1;min-width:0}.goal .info b{font-size:1.1rem}.goal .info p{margin:4px 0;color:var(--muted);font-size:.9rem}.goal .info .pc{color:var(--text);font-weight:700}
+.goalbtns{display:flex;gap:8px}.goalbtns .btn{margin-top:12px;min-height:48px;font-size:1rem}
+.info .done{font-weight:700;color:var(--inc);font-size:1.05rem}
+.confetti{display:none;position:relative;height:0;overflow:visible;pointer-events:none}.confetti i{position:absolute;top:0;width:8px;height:12px;border-radius:2px;opacity:0}
+@media(prefers-reduced-motion:no-preference){.confetti{display:block}.confetti i{animation:fall 2.4s ease-out forwards}@keyframes fall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(240px) rotate(540deg)}}}
+@media(prefers-reduced-motion:no-preference){.sheet{animation:up .25s}.card,.entry{animation:pop .3s}.fab{transition:transform .15s}.fab:active{transform:scale(.9)}@keyframes up{from{transform:translateY(40px);opacity:0}}@keyframes pop{from{transform:scale(.97);opacity:0}}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(min-width:700px){.ov{align-items:center}.sheet{border-radius:24px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <div class="top"><h1>💰 My Money</h1><div><button class="ib" id="theme" aria-label="Switch dark or light mode">🌙</button> <button class="ib" id="gear" aria-label="Open settings">⚙️</button></div></div>
+ <div class="months"><button class="ib" id="prev" aria-label="Previous month">‹</button><span id="mlabel" aria-live="polite"></span><button class="ib" id="next" aria-label="Next month">›</button></div>
+ <div class="bal"><small>Balance this month</small><b id="bal"></b></div>
+ <div class="row3"><div class="pill">⬇️ Income<b id="inc"></b></div><div class="pill">⬆️ Spent<b id="spent"></b></div></div>
+</div></header>
+<main class="wrap">
+ <div id="notice"></div>
+ <section class="card pull" id="budgetCard" aria-labelledby="bh"></section>
+ <section class="card" id="goalCard" aria-labelledby="gh"></section>
+ <section class="card welcome" id="welcome"><div class="big">👋</div><h2>Welcome to My Money!</h2><p>Tap <b>+</b> to add your first expense.</p></section>
+ <section class="card" aria-labelledby="ch"><h2 id="ch">Spending by category</h2><canvas id="donut"></canvas><div id="donutEmpty" class="empty">No spending yet this month 🌱</div><ul class="legend" id="legend"></ul></section>
+ <section class="card" aria-labelledby="bh2"><div class="top"><h2 id="bh2">Spending over time</h2></div><div class="seg" role="group" aria-label="Chart period"><button id="byDay" class="on">Days</button><button id="byWeek">Weeks</button></div><canvas id="bars" style="margin-top:10px"></canvas><div id="barsEmpty" class="empty">Nothing to chart yet 📊</div></section>
+ <section class="card" aria-labelledby="lh"><h2 id="lh">This month’s entries</h2><div id="list"></div></section>
+</main>
+<button class="fab" id="fab" aria-label="Add expense or income">+</button>
+<div id="modal"></div>
+<script>
+/* ===== CATEGORIES (edit me): [emoji, name] ===== */
+const EXPENSE_CATS=[["🍔","Food"],["🛒","Groceries"],["🚌","Transport"],["🏠","Rent & Home"],["💡","Bills"],["🛍️","Shopping"],["💊","Health"],["🎉","Fun"],["📚","Education"],["📦","Other"]];
+const INCOME_CATS=[["💼","Salary"],["💰","Side hustle"],["🎁","Gift"],["➕","Other income"]];
+/* ===== CURRENCIES (edit me): [Intl code, symbol, name, decimals] ===== */
+const CURRENCIES=[["USD","$","US dollar",2],["EUR","€","Euro",2],["GBP","£","British pound",2],["NGN","₦","Nigerian naira",2],["INR","₹","Indian rupee",2],["JPY","¥","Japanese yen",0],["PHP","₱","Philippine peso",2],["KES","KSh","Kenyan shilling",2],["ZAR","R","South African rand",2],["BRL","R$","Brazilian real",2],["CAD","C$","Canadian dollar",2],["AUD","A$","Australian dollar",2],["GHS","₵","Ghanaian cedi",2],["AED","د.إ","UAE dirham",2]];
+/* ===== CHART COLOURS (edit me) ===== */
+const PALETTE=["#7c3aed","#ec4899","#f59e0b","#10b981","#3b82f6","#ef4444","#14b8a6","#a855f7","#f97316","#64748b","#84cc16","#06b6d4"];
+
+const KEY="mymoney.v1",$=id=>document.getElementById(id);
+let mem=null,preview=false;
+function load(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):null}catch(e){preview=true;return mem}}
+function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){preview=true}}
+const S=Object.assign({entries:[],budget:0,cur:"USD",theme:"",custom:[],goal:null},load()||{});
+const now=new Date();let V={y:now.getFullYear(),m:now.getMonth()},chartMode="day";
+const pad=n=>String(n).padStart(2,"0"),ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cur=()=>CURRENCIES.find(c=>c[0]===S.cur)||CURRENCIES[0];
+const money=n=>{const c=cur();return(n<0?"-":"")+c[1]+new Intl.NumberFormat(undefined,{minimumFractionDigits:c[3],maximumFractionDigits:c[3]}).format(Math.abs(n))};
+const cats=t=>(t==="income"?INCOME_CATS:EXPENSE_CATS).concat(S.custom.filter(c=>c[2]===t).map(c=>[c[0],c[1]]));
+const catEmoji=(t,n)=>(cats(t).find(c=>c[1]===n)||["📦"])[0];
+const mKey=()=>`${V.y}-${pad(V.m+1)}`;
+const monthEntries=()=>S.entries.filter(e=>e.date.startsWith(mKey()));
+
+function applyTheme(){const dark=S.theme?S.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;if(S.theme)document.documentElement.dataset.theme=S.theme;$("theme").textContent=dark?"☀️":"🌙"}
+
+function render(){
+ const es=monthEntries(),inc=es.filter(e=>e.type==="income").reduce((a,e)=>a+e.amt,0),sp=es.filter(e=>e.type==="expense").reduce((a,e)=>a+e.amt,0);
+ $("mlabel").textContent=new Date(V.y,V.m,1).toLocaleDateString(undefined,{month:"long",year:"numeric"});
+ $("bal").textContent=money(inc-sp);$("inc").textContent=money(inc);$("spent").textContent=money(sp);
+ $("notice").innerHTML=preview?'<div class="note">Preview mode: saving starts once your app is online.</div>':"";
+ $("welcome").hidden=S.entries.length>0;
+ // budget
+ const b=S.budget,pct=b>0?sp/b*100:0,dim=new Date(V.y,V.m+1,0).getDate();
+ let left=dim;if(V.y===now.getFullYear()&&V.m===now.getMonth())left=dim-now.getDate()+1;else if(new Date(V.y,V.m,1)<new Date(now.getFullYear(),now.getMonth(),1))left=0;
+ const col=pct>=100?"var(--bad)":pct>=80?"var(--warn)":"var(--ok)";
+ let h='<h2 id="bh">Monthly budget</h2>';
+ if(!b)h+='<p class="empty" style="padding:0">Set a budget to see how much you can spend.</p><button class="btn sec" id="setB" style="margin-top:0">Set my budget</button>';
+ else{h+=`<div class="bar" role="progressbar" aria-valuenow="${Math.round(pct)}" aria-valuemin="0" aria-valuemax="100" aria-label="Budget used"><i style="width:${Math.min(100,pct)}%;background:${col}"></i></div>
+ <div class="stats"><div><b>${money(sp)}</b>spent</div><div><b>${money(Math.max(0,b-sp))}</b>left to spend</div><div><b>${left?money(Math.max(0,(b-sp)/left)):"–"}</b>about per day left</div></div>`;
+ if(pct>=100)h+=`<div class="banner bad" role="status">Oops! You’re ${money(sp-b)} over this month’s budget.</div>`;
+ else if(pct>=80)h+=`<div class="banner warn" role="status">Heads up! You’ve used ${Math.round(pct)}% of this month’s budget.</div>`;
+ h+='<button class="btn sec" id="setB" style="min-height:44px;font-size:.95rem">Change budget</button>'}
+ $("budgetCard").innerHTML=h;if($("setB"))$("setB").onclick=openSettings;
+ renderList(es);charts(es);renderGoal();
+}
+function renderList(es){
+ if(!es.length){$("list").innerHTML='<div class="empty">No entries this month yet ✨</div>';return}
+ const sorted=es.slice().sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);let h="",last="";
+ for(const e of sorted){
+  if(e.date!==last){last=e.date;const d=new Date(e.date+"T12:00:00");h+=`<div class="date">${d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}</div>`}
+  const x=e.type==="income";
+  h+=`<div class="entry"><button class="main" data-edit="${e.id}" aria-label="Edit ${esc(e.cat)} ${money(e.amt)}"><span class="emo">${catEmoji(e.type,e.cat)}</span><span class="txt"><b>${esc(e.note||e.cat)}</b><small>${esc(e.cat)}</small></span></button><span class="amt ${x?"i":"e"}">${x?"+":"-"}${money(e.amt)}</span><button class="del" data-del="${e.id}" aria-label="Delete ${esc(e.cat)} entry">🗑️</button></div>`}
+ $("list").innerHTML=h;
+}
+document.addEventListener("click",ev=>{
+ const ed=ev.target.closest("[data-edit]"),dl=ev.target.closest("[data-del]");
+ if(ed)openForm(S.entries.find(e=>e.id==ed.dataset.edit));
+ if(dl)ask("Delete this?","Delete",()=>{S.entries=S.entries.filter(e=>e.id!=dl.dataset.del);save();render()});
+});
+
+/* savings goal: {name,target,date,saved} stored in S.goal */
+let confetti=false;
+const JAR="M28 30h44v10q9 5 9 16v44q0 12-12 12H31q-12 0-12-12V56q0-11 9-16z";
+function renderGoal(){
+ const g=S.goal,el=$("goalCard");
+ if(!g){el.innerHTML='<h2 id="gh">🫙 Savings goal</h2><p style="margin:0;color:var(--muted)">Saving up for something special? Fill a jar!</p><button class="btn sec" id="setG">Set a goal</button>';$("setG").onclick=()=>openGoal();return}
+ const p=g.target>0?Math.min(100,g.saved/g.target*100):0,left=Math.max(0,g.target-g.saved),h=82*p/100;
+ let wk="";
+ if(g.date&&left>0){const days=Math.ceil((new Date(g.date+"T23:59:59")-new Date())/864e5);wk=days>0?`<p>Save about <b class="pc">${money(left/Math.max(1,Math.ceil(days/7)))}</b> a week to make it</p>`:"<p>Your target date has passed. Pick a new one?</p>"}
+ let cf="";
+ if(confetti){confetti=false;const cols=["#ec4899","#f59e0b","#10b981","#3b82f6","#7c3aed"];for(let i=0;i<28;i++)cf+=`<i style="left:${i*3.6}%;background:${cols[i%5]};animation-delay:${(i%7)*.12}s"></i>`;cf=`<div class="confetti" aria-hidden="true">${cf}</div>`}
+ el.innerHTML=`${cf}<h2 id="gh">🫙 Savings goal</h2><div class="goal"><svg viewBox="0 0 100 130" role="img" aria-label="Jar ${Math.round(p)}% full"><defs><clipPath id="jc"><path d="${JAR}"/></clipPath></defs><rect x="26" y="14" width="48" height="14" rx="6" style="fill:var(--g1)"/><path d="${JAR}" style="fill:var(--bg)"/><g clip-path="url(#jc)"><rect x="0" y="${112-h}" width="100" height="${h+2}" style="fill:var(--g2)"/><rect x="0" y="${112-h}" width="100" height="5" style="fill:var(--g3);opacity:.7"/></g><path d="${JAR}" fill="none" style="stroke:var(--g1)" stroke-width="3"/><circle cx="42" cy="78" r="2.5" style="fill:var(--text)"/><circle cx="58" cy="78" r="2.5" style="fill:var(--text)"/><path d="M44 86q6 6 12 0" fill="none" style="stroke:var(--text)" stroke-width="2" stroke-linecap="round"/></svg>
+ <div class="info"><b>${esc(g.name)}</b><p><span class="pc">${Math.round(p)}% saved</span> · ${money(g.saved)} of ${money(g.target)}</p>${p>=100?'<p class="done">You did it! 🎉</p>':`<p>${money(left)} left</p>`}${wk}</div></div>
+ <div class="goalbtns"><button class="btn" id="jarAdd">+ Add to jar</button><button class="btn sec" id="editG">Edit goal</button></div>`;
+ $("jarAdd").onclick=openJar;$("editG").onclick=()=>openGoal(g);
+}
+function openGoal(g){
+ $("modal").innerHTML=`<div class="ov"><div class="sheet" role="dialog" aria-label="Savings goal"><h2>🫙 Savings goal</h2>
+ <label for="gn">What are you saving for?</label><input id="gn" maxlength="40" placeholder="New phone" value="${g?esc(g.name):""}">
+ <label for="gt">Target amount (${cur()[1]})</label><input id="gt" inputmode="decimal" placeholder="0" value="${g?g.target:""}">
+ <label for="gd">Target date (optional)</label><input id="gd" type="date" value="${g&&g.date||""}">
+ <button class="btn" id="gs">Save goal</button>${g?'<button class="btn dng" id="gx">Remove goal</button>':""}<button class="btn sec" id="gc">Cancel</button></div></div>`;
+ $("gn").focus();$("gc").onclick=close;
+ if(g)$("gx").onclick=()=>ask("Delete this?","Delete",()=>{S.goal=null;save();render()});
+ $("gs").onclick=()=>{const t=parseFloat($("gt").value.replace(",","."));if(!(t>0)){$("gt").style.borderColor="var(--bad)";$("gt").focus();return}
+  S.goal={name:$("gn").value.trim()||"My goal",target:Math.round(t*100)/100,date:$("gd").value,saved:g?g.saved:0};save();close();render()};
+}
+function openJar(){let mode="in",keep="";const draw=()=>{
+ $("modal").innerHTML=`<div class="ov"><div class="sheet" role="dialog" aria-label="Add to jar"><h2>🫙 ${esc(S.goal.name)}</h2>
+ <div class="seg" role="group" aria-label="Put in or take out"><button data-m="in" class="${mode==="in"?"on":""}">+ Put in</button><button data-m="out" class="${mode==="out"?"on":""}">− Take out</button></div>
+ <label for="ja">Amount (${cur()[1]})</label><input id="ja" inputmode="decimal" placeholder="0" autocomplete="off" value="${keep}" style="font-size:2rem;font-weight:700;text-align:center">
+ <button class="btn" id="js">${mode==="in"?"Add to jar":"Take out"}</button><button class="btn sec" id="jc2">Cancel</button></div></div>`;
+ $("ja").focus();
+ document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{keep=$("ja").value;mode=b.dataset.m;draw()});
+ $("jc2").onclick=close;
+ $("js").onclick=()=>{const a=parseFloat($("ja").value.replace(",","."));if(!(a>0)){$("ja").style.borderColor="var(--bad)";return}
+  const g=S.goal,was=g.saved>=g.target;g.saved=Math.max(0,Math.round((g.saved+(mode==="in"?a:-a))*100)/100);
+  if(!was&&g.saved>=g.target)confetti=true;save();close();render()};
+};draw()}
+
+/* charts */
+function setup(c,h){const w=c.parentElement.clientWidth-32,d=window.devicePixelRatio||1;c.width=w*d;c.height=h*d;c.style.height=h+"px";const x=c.getContext("2d");x.scale(d,d);return[x,w]}
+function charts(es){
+ const ex=es.filter(e=>e.type==="expense"),tot=ex.reduce((a,e)=>a+e.amt,0),txt=getComputedStyle(document.documentElement).getPropertyValue("--muted");
+ $("donut").hidden=$("bars").hidden=!tot;$("donutEmpty").hidden=$("barsEmpty").hidden=!!tot;$("legend").innerHTML="";
+ if(!tot)return;
+ const by={};ex.forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);
+ const list=Object.entries(by).sort((a,b)=>b[1]-a[1]);
+ let[x,w]=setup($("donut"),200),cx=w/2,r=85,a=-Math.PI/2;
+ list.forEach(([n,v],i)=>{const s=v/tot*Math.PI*2;x.beginPath();x.arc(cx,100,r,a,a+s);x.arc(cx,100,r*.6,a+s,a,true);x.closePath();x.fillStyle=PALETTE[i%PALETTE.length];x.fill();a+=s});
+ x.fillStyle=getComputedStyle(document.body).color;x.textAlign="center";x.font="700 16px system-ui";x.fillText(money(tot),cx,106);
+ $("legend").innerHTML=list.map(([n,v],i)=>`<li><span class="sw" style="background:${PALETTE[i%PALETTE.length]}"></span><span class="n">${catEmoji("expense",n)} ${esc(n)}</span><b>${money(v)}</b> <span style="color:var(--muted);width:44px;text-align:right">${Math.round(v/tot*100)}%</span></li>`).join("");
+ // bars
+ const dim=new Date(V.y,V.m+1,0).getDate(),n=chartMode==="day"?dim:Math.ceil(dim/7),vals=Array(n).fill(0);
+ ex.forEach(e=>{const d=+e.date.slice(8);vals[chartMode==="day"?d-1:Math.floor((d-1)/7)]+=e.amt});
+ [x,w]=setup($("bars"),180);const mx=Math.max(...vals),bw=w/n,base=150;
+ vals.forEach((v,i)=>{const h=v/mx*(base-14);x.fillStyle=PALETTE[0];x.beginPath();x.roundRect?x.roundRect(i*bw+bw*.15,base-h,bw*.7,h,4):x.rect(i*bw+bw*.15,base-h,bw*.7,h);x.fill();
+  if(chartMode==="week"||i===0||(i+1)%5===0){x.fillStyle=txt;x.font="11px system-ui";x.textAlign="center";x.fillText(chartMode==="day"?i+1:"W"+(i+1),i*bw+bw/2,base+16)}});
+ x.fillStyle=txt;x.textAlign="left";x.font="11px system-ui";x.fillText("Top: "+money(mx),0,10);
+}
+function setMode(m){chartMode=m;$("byDay").classList.toggle("on",m==="day");$("byWeek").classList.toggle("on",m==="week");render()}
+$("byDay").onclick=()=>setMode("day");$("byWeek").onclick=()=>setMode("week");
+addEventListener("resize",()=>render());
+
+/* dialogs */
+function close(){$("modal").innerHTML=""}
+function ask(msg,label,fn){$("modal").innerHTML=`<div class="ov"><div class="sheet" role="alertdialog" aria-label="${esc(msg)}"><h2>${esc(msg)}</h2><button class="btn dng" id="yes">${label}</button><button class="btn sec" id="no">Cancel</button></div></div>`;$("yes").onclick=()=>{close();fn()};$("no").onclick=close;$("no").focus()}
+function openForm(ent){
+ let t=ent?ent.type:"expense",cat=ent?ent.cat:cats(t)[0][1];
+ const draw=()=>{
+  $("modal").innerHTML=`<div class="ov"><div class="sheet" role="dialog" aria-label="${ent?"Edit entry":"Add entry"}"><h2>${ent?"Edit entry":"Add something"}</h2>
+  <div class="seg" role="group" aria-label="Type"><button data-t="expense" class="${t==="expense"?"on":""}">⬆️ Expense</button><button data-t="income" class="${t==="income"?"on":""}">⬇️ Income</button></div>
+  <label for="amount">Amount (${cur()[1]})</label><input id="amount" inputmode="decimal" pattern="[0-9]*[.,]?[0-9]*" placeholder="0" autocomplete="off" value="${ent?ent.amt:keepAmt}">
+  <label>Category</label><div class="chips">${cats(t).map(c=>`<button class="chip ${c[1]===cat?"on":""}" data-c="${esc(c[1])}">${c[0]} ${esc(c[1])}</button>`).join("")}<button class="chip" id="newc">➕ New</button></div>
+  <div id="newrow" hidden><label>My own category</label><div class="two"><input id="ne" maxlength="4" placeholder="😀" aria-label="Emoji"><input id="nn" placeholder="Name" aria-label="Category name"><button class="chip" id="addc">Add</button></div></div>
+  <label for="note">Note (optional)</label><input id="note" maxlength="80" value="${ent?esc(ent.note):""}">
+  <label for="date">Date</label><input id="date" type="date" value="${ent?ent.date:ymd(now)}">
+  <button class="btn" id="save">Save</button><button class="btn sec" id="cancel">Cancel</button></div></div>`;
+  $("amount").focus();
+  document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{keepAmt=$("amount").value;t=b.dataset.t;cat=cats(t)[0][1];draw()});
+  document.querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{cat=b.dataset.c;document.querySelectorAll("[data-c]").forEach(x=>x.classList.toggle("on",x===b))});
+  $("newc").onclick=()=>{$("newrow").hidden=false;$("ne").focus()};
+  $("addc").onclick=()=>{const e=$("ne").value.trim(),n=$("nn").value.trim();if(!e||!n)return;keepAmt=$("amount").value;S.custom.push([e,n,t]);cat=n;save();draw()};
+  $("cancel").onclick=close;
+  $("save").onclick=()=>{const a=parseFloat($("amount").value.replace(",","."));if(!(a>0)){$("amount").style.borderColor="var(--bad)";$("amount").focus();return}
+   const o={type:t,amt:Math.round(a*100)/100,cat,note:$("note").value.trim(),date:$("date").value||ymd(now)};
+   if(ent)Object.assign(ent,o);else S.entries.push(Object.assign({id:Date.now()},o));
+   const d=new Date(o.date+"T12:00:00");V={y:d.getFullYear(),m:d.getMonth()};save();close();render()};
+ };
+ let keepAmt="";draw();
+}
+function csvFor(all){const rows=[["date","type","category","note","amount","currency"]];S.entries.filter(e=>all||e.date.startsWith(mKey())).sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>rows.push([e.date,e.type,e.cat,e.note,e.amt,S.cur]));return rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\n")}
+function exportCsv(all){const csv=csvFor(all);try{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download=all?"my-money-all.csv":`my-money-${mKey()}.csv`;document.body.appendChild(a);a.click();a.remove()}catch(e){}
+ $("csvbox").innerHTML='<p style="font-size:.85rem;color:var(--muted)">If no download started, copy this:</p><textarea readonly aria-label="CSV text">'+esc(csv)+"</textarea>"}
+function openSettings(){
+ $("modal").innerHTML=`<div class="ov"><div class="sheet" role="dialog" aria-label="Settings"><h2>Settings</h2>
+ <label for="cs">Currency (only changes the symbol)</label><select id="cs">${CURRENCIES.map(c=>`<option value="${c[0]}" ${c[0]===S.cur?"selected":""}>${esc(c[1])} ${esc(c[2])}</option>`).join("")}</select>
+ <label for="bg">Monthly budget (${cur()[1]})</label><input id="bg" inputmode="decimal" placeholder="0" value="${S.budget||""}">
+ <button class="btn sec" id="ex1">⬇️ Export this month (CSV)</button><button class="btn sec" id="ex2" style="margin-top:8px">⬇️ Export all months (CSV)</button><div id="csvbox"></div>
+ <button class="btn dng" id="clr">Clear all data</button>
+ <p style="color:var(--muted)">🔒 Your data stays on this device. Nothing is uploaded, and there’s no sign-up.</p>
+ <button class="btn" id="done">Done</button></div></div>`;
+ $("cs").onchange=()=>{S.cur=$("cs").value;save();render()};
+ $("bg").oninput=()=>{S.budget=Math.max(0,parseFloat($("bg").value.replace(",","."))||0);save();render()};
+ $("ex1").onclick=()=>exportCsv(false);$("ex2").onclick=()=>exportCsv(true);
+ $("clr").onclick=()=>ask("Clear all data? This can’t be undone.","Yes, clear everything",()=>{S.entries=[];S.budget=0;S.custom=[];S.goal=null;save();render()});
+ $("done").onclick=close;
+}
+$("gear").onclick=openSettings;$("fab").onclick=()=>openForm();
+$("prev").onclick=()=>{V=V.m?{y:V.y,m:V.m-1}:{y:V.y-1,m:11};render()};
+$("next").onclick=()=>{V=V.m<11?{y:V.y,m:V.m+1}:{y:V.y+1,m:0};render()};
+$("theme").onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;S.theme=dark?"light":"dark";document.documentElement.dataset.theme=S.theme;save();applyTheme();render()};
+applyTheme();render();
+</script>
+</body>
+</html>

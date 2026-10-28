@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alex Rivera – Freelance Graphic Designer</title>
+<meta name="description" content="Alex Rivera is a freelance graphic designer creating logos and brands that make small businesses look big. Working remotely with clients worldwide.">
+<meta property="og:title" content="Alex Rivera – Freelance Graphic Designer">
+<meta property="og:description" content="I design logos and brands that make small businesses look big.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!--
+  =====================================================
+  EDIT YOUR TEXT HERE (look for the SITE object in the
+  <script> at the bottom of this file). Everything on the
+  page is filled in from that one block.
+  Placeholders look like [ADD LINK].
+  =====================================================
+-->
+<style>
+:root{
+  --bg:#fff8f1; --surface:#ffffff; --text:#0f2044; --muted:#46557a;
+  --brand:#f26b1d; --brand-text:#b8480a; --accent:#1f3a7a; --line:#f1e2d3;
+  --shadow:0 10px 30px rgba(15,32,68,.12);
+  --g1:linear-gradient(135deg,#e8731a,#c2480a);
+  --g2:linear-gradient(135deg,#1f3a7a,#0f2044);
+  --g3:linear-gradient(135deg,#f26b1d,#1f3a7a);
+  --btn-text:#fff; color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1730; --surface:#14244a; --text:#fff4ea; --muted:#b9c4dc;
+    --brand:#ff8a3d; --brand-text:#ffa05e; --accent:#ffb27a; --line:#25375f;
+    --shadow:0 10px 30px rgba(0,0,0,.4); --btn-text:#0b1730; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1730; --surface:#14244a; --text:#fff4ea; --muted:#b9c4dc;
+  --brand:#ff8a3d; --brand-text:#ffa05e; --accent:#ffb27a; --line:#25375f;
+  --shadow:0 10px 30px rgba(0,0,0,.4); --btn-text:#0b1730; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(76px + env(safe-area-inset-top,0px))}
+body{margin:0;font-family:"Poppins",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:1.05rem;overflow-x:hidden}
+h1,h2,h3{line-height:1.2;margin:0 0 .6em}
+p{margin:0 0 1em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:72px 0}
+.eyebrow{display:inline-block;font-weight:600;color:var(--brand-text);letter-spacing:.08em;text-transform:uppercase;font-size:.85rem;margin-bottom:.5rem}
+h2{font-size:clamp(1.9rem,7vw,2.8rem);font-weight:900;letter-spacing:-.025em}
+h2::after{content:"";display:block;width:64px;height:6px;border-radius:6px;background:var(--brand);margin-top:.35em}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px}
+.logo{font-weight:900;text-decoration:none;font-size:1.1rem}
+.logo span{color:var(--brand-text)}
+.bar-right{display:flex;align-items:center;gap:8px}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:4px}
+nav a{display:block;padding:10px 12px;border-radius:999px;text-decoration:none;font-weight:500;font-size:.95rem}
+nav a:hover{background:var(--line)}
+.icon-btn,.menu-btn{min-height:44px;min-width:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit;font-weight:600;cursor:pointer;padding:0 16px;box-shadow:var(--shadow)}
+.icon-btn{padding:0;font-size:1.15rem}
+.menu-btn{display:none}
+@media (max-width:759px){
+  .menu-btn{display:inline-block}
+  nav{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--shadow);display:none}
+  nav.open{display:block}
+  nav ul{flex-direction:column;padding:10px 20px 16px}
+  nav a{padding:14px 12px;font-size:1.05rem}
+}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font:inherit;font-weight:600;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--brand);color:var(--btn-text);box-shadow:0 8px 20px rgba(242,107,29,.3)}
+.btn-ghost{background:transparent;border-color:var(--brand-text);color:var(--brand-text)}
+.btn svg{width:1.15em;height:1.15em;margin-right:.55em;flex:none}
+:root:not([data-theme="dark"]) .btn-primary{background:#bf4a08;color:#fff}
+.btns{display:flex;flex-direction:column;gap:12px;margin-top:1.6rem}
+@media (min-width:480px){.btns{flex-direction:row;flex-wrap:wrap}}
+
+/* Hero */
+.hero{padding-top:48px;text-align:center;background:radial-gradient(circle at 15% 0%,rgba(242,107,29,.25),transparent 45%),radial-gradient(circle at 90% 20%,rgba(31,58,122,.22),transparent 45%)}
+.badge{width:140px;height:140px;border-radius:50%;margin:0 auto 1.4rem;display:grid;place-items:center;background:var(--g1);color:#fff;font-size:3rem;font-weight:900;box-shadow:var(--shadow);border:5px solid var(--surface);overflow:hidden}
+.badge img{width:100%;height:100%;object-fit:cover}
+.hero h1{font-size:clamp(2.8rem,13vw,5.4rem);font-weight:900;letter-spacing:-.035em;line-height:1.05}
+.role{font-size:1.2rem;font-weight:600;color:var(--brand-text);margin-bottom:.3rem}
+.where{color:var(--muted);font-size:.95rem}
+.pitch{font-size:1.2rem;max-width:34ch;margin:1rem auto 0}
+.hero .btns,.contact .btns{justify-content:center;align-items:stretch}
+.contact .btns{margin-top:0}
+@media (min-width:760px){.badge{width:170px;height:170px;font-size:3.6rem}.hero{padding-top:80px}}
+
+/* About */
+.about p{max-width:62ch;font-size:1.1rem}
+
+/* Skills */
+.tags{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px}
+.tags li{background:var(--surface);border:1px solid var(--line);padding:10px 18px;border-radius:999px;font-weight:500;box-shadow:var(--shadow)}
+
+/* Projects */
+.grid{display:grid;gap:22px;grid-template-columns:1fr}
+@media (min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:960px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+.card .top{height:120px}
+.card .body{padding:22px;display:flex;flex-direction:column;flex:1}
+.card h3{font-size:1.3rem;font-weight:800;letter-spacing:-.01em}
+.card p{color:var(--muted)}
+.card .btn{margin-top:auto;min-height:48px}
+.quote{padding:28px;text-align:center}
+.quote p{font-size:1.15rem;font-style:italic;color:var(--text);margin:0}
+
+/* Contact */
+.contact{text-align:center;background:var(--surface);border-top:1px solid var(--line)}
+.contact h2{font-size:clamp(2.2rem,10vw,3.8rem)}
+.contact h2::after{margin-left:auto;margin-right:auto}
+.contact p.cta{font-size:1.2rem;max-width:36ch;margin:0 auto 1.6rem}
+.socials{display:flex;justify-content:center;gap:14px;margin-top:2rem;list-style:none;padding:0}
+.socials a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--g2);color:#fff;border:2px solid var(--brand);text-decoration:none;font-weight:700;box-shadow:var(--shadow);transition:transform .2s}
+.socials a:hover{transform:translateY(-3px) scale(1.05)}
+.note{color:var(--muted);font-size:.85rem;margin-top:1rem}
+
+footer{text-align:center;padding:28px 20px calc(28px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:.95rem}
+
+/* Reveal */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{opacity:1;transform:none;transition:none}
+  .btn,.socials a{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="logo" href="#home" id="logoLink">Alex<span> Rivera</span></a>
+    <div class="bar-right">
+      <nav id="nav" aria-label="Main menu">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#testimonials">Kind words</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch to dark mode">🌙</button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+  <!-- 1. HERO -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="wrap reveal">
+      <div class="badge" id="badge"></div>
+      <h1 id="hero-name"></h1>
+      <p class="role" id="role"></p>
+      <p class="where" id="where"></p>
+      <p class="pitch" id="pitch"></p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#projects">See my work</a>
+        <a class="btn btn-ghost" href="#contact">Contact me</a>
+        <a class="btn btn-ghost" href="cv.pdf" download="cv.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Download my CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. ABOUT -->
+  <section class="about" id="about" aria-labelledby="about-h">
+    <div class="wrap reveal">
+      <span class="eyebrow">Hello there</span>
+      <h2 id="about-h">About me</h2>
+      <p id="bio"></p>
+    </div>
+  </section>
+
+  <!-- 3. SKILLS -->
+  <section id="skills" aria-labelledby="skills-h">
+    <div class="wrap reveal">
+      <span class="eyebrow">What I use</span>
+      <h2 id="skills-h">Skills</h2>
+      <ul class="tags" id="skillList"></ul>
+    </div>
+  </section>
+
+  <!-- 4. PROJECTS -->
+  <section id="projects" aria-labelledby="projects-h">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">Selected work</span>
+        <h2 id="projects-h">Projects</h2>
+      </div>
+      <div class="grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- 5. TESTIMONIALS -->
+  <section id="testimonials" aria-labelledby="test-h">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow">What clients say</span>
+        <h2 id="test-h">Testimonials</h2>
+      </div>
+      <div class="grid" id="testGrid"></div>
+    </div>
+  </section>
+
+  <!-- 6. CONTACT -->
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <div class="wrap reveal">
+      <h2 id="contact-h">Let’s work together!</h2>
+      <p class="cta" id="cta"></p>
+      <div class="btns">
+        <a class="btn btn-primary" id="emailBtn" href="#">Email me</a>
+        <a class="btn btn-ghost" href="cv.pdf" download="cv.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>Download my CV</a>
+      </div>
+      <ul class="socials" id="socialList"></ul>
+      <p class="note" id="socialNote"></p>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="year">2026</span> <span id="footName"></span></footer>
+
+<script>
+/* =====================================================
+   EDIT YOUR CONTENT HERE
+   ===================================================== */
+const SITE = {
+  name: "Alex Rivera",
+  role: "Freelance graphic designer",
+  where: "Remote · working with clients worldwide",
+  pitch: "I design logos and brands that make small businesses look big.",
+  photo: "", // No photo → initials badge. To use a photo, put the file name here, e.g. "alex.jpg"
+  bio: "I’m a graphic designer with 4 years of experience helping cafés, shops and start-ups look professional. I love bold colours, clean layouts and turning messy ideas into simple visuals. When I’m not designing, I’m sketching people in coffee shops.",
+  skills: ["Logo design","Brand identity","Social media graphics","Packaging","Adobe Illustrator","Figma","Canva"],
+  projects: [
+    { title: "Sunrise Café rebrand", text: "New logo, menu and cup design for a small café. Instagram followers grew after the launch.", link: "" },
+    { title: "GreenLeaf packaging", text: "Eco-friendly packaging for a skincare start-up, with a calm, natural look.", link: "" },
+    { title: "30-day social pack", text: "30 ready-to-post Instagram templates for a fitness coach.", link: "" }
+  ],
+  testimonials: [], // Add like: { quote: "…", author: "Name, Business" }
+  email: "hello@alexrivera.example",
+  cta: "Available for freelance projects. Let’s make your brand stand out!",
+  socials: [
+    { label: "LinkedIn",  short: "in", url: "https://www.linkedin.com/in/your-profile" },
+    { label: "Instagram", short: "IG", url: "https://www.instagram.com/your-profile" },
+    { label: "Behance",   short: "Bē", url: "https://www.behance.net/your-profile" }
+  ]
+};
+/* ===================================================== */
+
+const $ = id => document.getElementById(id);
+const gradients = ["var(--g1)","var(--g2)","var(--g3)"];
+function el(tag, cls, text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e}
+
+document.documentElement.classList.add("js");
+
+// Hero
+$("hero-name").textContent = SITE.name;
+$("role").textContent = SITE.role;
+$("where").textContent = SITE.where;
+$("pitch").textContent = SITE.pitch;
+const initials = SITE.name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
+if (SITE.photo) {
+  const img = el("img"); img.src = SITE.photo; img.alt = "Portrait of " + SITE.name;
+  $("badge").appendChild(img);
+} else {
+  $("badge").textContent = initials;
+  $("badge").setAttribute("role","img");
+  $("badge").setAttribute("aria-label","Initials badge for " + SITE.name);
+}
+$("bio").textContent = SITE.bio;
+SITE.skills.forEach(s => $("skillList").appendChild(el("li","",s)));
+
+// Projects
+SITE.projects.forEach((p,i) => {
+  const card = el("article","card reveal");
+  const top = el("div","top"); top.style.background = gradients[i % gradients.length]; top.setAttribute("aria-hidden","true");
+  const body = el("div","body");
+  body.append(el("h3","",p.title), el("p","",p.text));
+  if (p.link) {
+    const a = el("a","btn btn-ghost","View project");
+    a.href = p.link; a.target = "_blank"; a.rel = "noopener";
+    a.setAttribute("aria-label","View project: " + p.title);
+    body.appendChild(a);
+  }
+  card.append(top, body);
+  $("projectGrid").appendChild(card);
+});
+
+// Testimonials
+if (SITE.testimonials.length) {
+  SITE.testimonials.forEach(t => {
+    const c = el("figure","card quote reveal"); c.style.margin = "0";
+    c.append(el("p","","“" + t.quote + "”"), el("figcaption","",t.author));
+    $("testGrid").appendChild(c);
+  });
+} else {
+  const c = el("div","card quote reveal");
+  c.append(el("h3","","Kind words coming soon"), el("p","","Client testimonials will appear here."));
+  $("testGrid").appendChild(c);
+}
+
+// Contact
+$("cta").textContent = SITE.cta;
+$("emailBtn").href = "mailto:" + SITE.email;
+$("emailBtn").setAttribute("aria-label","Email " + SITE.name + " at " + SITE.email);
+SITE.socials.forEach(s => {
+  const li = el("li"); const a = el("a","",s.short);
+  a.href = s.url; a.target = "_blank"; a.rel = "noopener";
+  a.setAttribute("aria-label", s.label + " (opens in a new tab)");
+  li.appendChild(a); $("socialList").appendChild(li);
+});
+if (SITE.socials.some(s => /your-profile/.test(s.url))) {
+  $("socialNote").textContent = "[ADD LINK] Replace the “your-profile” social links with your real ones.";
+}
+
+// Footer
+$("year").textContent = new Date().getFullYear();
+$("footName").textContent = SITE.name;
+
+// Mobile menu
+const menuBtn = $("menuBtn"), nav = $("nav");
+menuBtn.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.textContent = open ? "Close" : "Menu";
+});
+nav.addEventListener("click", e => {
+  if (e.target.tagName === "A") { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false"); menuBtn.textContent = "Menu"; }
+});
+
+// Dark / light mode
+const root = document.documentElement, themeBtn = $("themeBtn");
+function isDark(){
+  const t = root.getAttribute("data-theme");
+  return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function syncBtn(){
+  const d = isDark();
+  themeBtn.textContent = d ? "☀️" : "🌙";
+  themeBtn.setAttribute("aria-label", d ? "Switch to light mode" : "Switch to dark mode");
+}
+try { const saved = localStorage.getItem("theme"); if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved); } catch(e){}
+syncBtn();
+themeBtn.addEventListener("click", () => {
+  const next = isDark() ? "light" : "dark";
+  root.setAttribute("data-theme", next);
+  try { localStorage.setItem("theme", next); } catch(e){}
+  syncBtn();
+});
+
+// Fade-in on scroll
+const items = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+  }, { threshold: .12 });
+  items.forEach(i => io.observe(i));
+} else {
+  items.forEach(i => i.classList.add("in"));
+}
+</script>
+</body>
+</html>
